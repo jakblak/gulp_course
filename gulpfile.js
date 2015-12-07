@@ -3,13 +3,20 @@ var config = require('./gulp.config')();
 var $ = require('gulp-load-plugins')({lazy: true});
 
 gulp.task('vet', function() {
-
   return gulp
     .src(config.alljs)
     .pipe($.jscs())
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish', {
       verbose: true
-      }))
+    }))
     .pipe($.jshint.reporter('fail'));
+});
+
+gulp.task('styles', function() {
+  return gulp
+    .src(config.less)
+    .pipe($.less())
+    .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+    .pipe(gulp.dest(config.temp));
 });
