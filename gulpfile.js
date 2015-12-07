@@ -1,17 +1,11 @@
 var gulp = require('gulp');
-
-// var jshint = require('gulp-jshint');
-// var jscs = require('gulp-jscs');
-// var util = require('gulp-util');
-
+var config = require('./gulp.config')();
 var $ = require('gulp-load-plugins')({lazy: true});
 
 gulp.task('vet', function() {
-  return gulp.src([
-      './src/**/*.js',
-      './*.js'
-    ])
 
+  return gulp
+    .src(config.alljs)
     .pipe($.jscs())
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish', {
