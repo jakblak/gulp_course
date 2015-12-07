@@ -31,6 +31,7 @@ gulp.task('clean-styles', function() {
 });
 
 gulp.task('wiredep', function() {
+  utilities.log('add bower css, jss and app js files into index.html');
   var options = config.getWiredepDefaultOptions();
   var wiredep = require('wiredep').stream;
   var jsFiles = gulp.src(config.js);
@@ -42,6 +43,11 @@ gulp.task('wiredep', function() {
     .pipe(gulp.dest(config.client));
 });
 
-gulp.task('less-watcher', function() {
-    gulp.watch([config.less], ['styles']);
+gulp.task('inject', ['wiredep', 'styles'], function() {
+  utilities.log('wire up the app css into the html, and call wiredep ');
+
+  return gulp
+    .src(config.index)
+    .pipe($.inject(gulp.src(config.css)))
+    .pipe(gulp.dest(config.client));
 });
