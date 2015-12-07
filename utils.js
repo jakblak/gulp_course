@@ -1,6 +1,8 @@
 var $ = require('gulp-load-plugins')({lazy: true});
+var utilities = require('./utils');
+var del = require('del');
 
-exports.logger = function (msg) {
+exports.log = function (msg) {
     if (typeof(msg) === 'object') {
         for (var item in msg) {
             if (msg.hasOwnProperty(item)) {
@@ -10,4 +12,9 @@ exports.logger = function (msg) {
     } else {
         $.util.log($.util.colors.blue(msg));
     }
-}
+};
+
+exports.clean = function (path, done) {
+  utilities.log('Cleaning: ' + $.util.colors.blue(path));
+  del(path, done);
+};
