@@ -1,18 +1,21 @@
 var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var jscs = require('gulp-jscs');
-var util = require('gulp-util')
+
+// var jshint = require('gulp-jshint');
+// var jscs = require('gulp-jscs');
+// var util = require('gulp-util');
+
+var $ = require('gulp-load-plugins')({lazy: true});
 
 gulp.task('vet', function() {
   return gulp.src([
       './src/**/*.js',
       './*.js'
     ])
-    
-    .pipe(jscs())
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish', {
+
+    .pipe($.jscs())
+    .pipe($.jshint())
+    .pipe($.jshint.reporter('jshint-stylish', {
       verbose: true
       }))
-    .pipe(jshint.reporter('fail'));
+    .pipe($.jshint.reporter('fail'));
 });

@@ -8,10 +8,10 @@
     CustomerDetail.$inject = ['$stateParams', '$window', 'dataservice', 'logger'];
     /* @ngInject */
 
-    function foo() {
-        y = 2;
-        var x = 1
-    }
+    // function foo() {
+    //     y = 2;
+    //     var x = 1
+    // }
 
     function CustomerDetail($stateParams, $window, dataservice, logger) {
         var vm = this;
