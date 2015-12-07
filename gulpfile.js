@@ -15,7 +15,8 @@ gulp.task('vet', function() {
     .pipe($.jshint.reporter('fail'));
 });
 
-gulp.task('styles', ['clean-styles'], function() {
+gulp.task('styles', ['clean-styles'], function(done) {
+  utilities.logger('Cleaning Less --> CSS');
   return gulp
     .src(config.less)
     .pipe($.less())
@@ -29,8 +30,8 @@ gulp.task('clean-styles', function() {
 });
 
 
-function clean(path) {
+function clean(path, done) {
   utilities.logger('Cleaning: ' + $.util.colors.blue(path));
-  del(path);
+  del(path, done);
 }
 
