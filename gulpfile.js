@@ -2,8 +2,10 @@ var gulp = require('gulp');
 var config = require('./gulp.config')();
 var utilities = require('./utils');
 var $ = require('gulp-load-plugins')({lazy: true});
+var port = process.env.PORT || config.defaultPort;
 
 gulp.task('vet', function() {
+  utilities.log('Checking for JS syntax issues');
   return gulp
     .src(config.alljs)
     .pipe($.jscs())
@@ -16,7 +18,6 @@ gulp.task('vet', function() {
 
 gulp.task('styles', ['clean-styles'], function(done) {
   utilities.log('Cleaning Less --> CSS');
-
   return gulp
     .src(config.less)
     .pipe($.less())
@@ -45,9 +46,23 @@ gulp.task('wiredep', function() {
 
 gulp.task('inject', ['wiredep', 'styles'], function() {
   utilities.log('wire up the app css into the html, and call wiredep ');
-
   return gulp
     .src(config.index)
     .pipe($.inject(gulp.src(config.css)))
     .pipe(gulp.dest(config.client));
+});
+
+gulp.task('serve-dev', ['inject'], function() {
+  var isDev = true;
+  var nodeOptions = {
+    script: config.nodeServer,
+    delayTime: 1,
+    env: {
+      'PORT': port,
+      'NODE_ENV': isDev ? 'dev' : 'build'
+    },
+    watch: [config.server]
+  };
+
+  return $.nodemon(nodeOptions);
 });
