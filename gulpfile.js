@@ -24,11 +24,9 @@ gulp.task('styles', ['clean-styles'], function(done) {
   utilities.log('Cleaning Less --> CSS');
   return gulp
     .src(config.less)
-    .pipe($.less())
     .pipe($.plumber())
-    .pipe($.autoprefixer({
-      browsers: ['last 2 version', '> 5%']
-    }))
+    .pipe($.less())
+    .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
     .pipe(gulp.dest(config.temp));
 });
 
@@ -53,16 +51,16 @@ gulp.task('clean', function(done) {
   del(delconfig, done);
 });
 
-gulp.task('clean-fonts', function(done) {
-  utilities.clean(config.build + 'fonts/**/*.*', done);
+gulp.task('clean-fonts', function() {
+  utilities.clean(config.build + 'fonts/**/*.*');
 });
 
-gulp.task('clean-images', function(done) {
-  utilities.clean(config.build + 'images/**/*.*', done);
+gulp.task('clean-images', function() {
+  utilities.clean(config.build + 'images/**/*.*');
 });
 
-gulp.task('clean-styles', function(done) {
-  utilities.clean(config.temp + '**/*.css', done);
+gulp.task('clean-styles', function() {
+  utilities.clean(config.temp + '**/*.css');
 });
 
 gulp.task('wiredep', function() {
@@ -86,7 +84,7 @@ gulp.task('inject', ['wiredep', 'styles'], function() {
     .pipe(gulp.dest(config.client));
 });
 
-gulp.task('serve-dev', ['inject'], function() {
+gulp.task('serve', ['inject'], function() {
   var isDev = true;
   var nodeOptions = {
     script: config.nodeServer,
@@ -106,5 +104,4 @@ gulp.task('serve-dev', ['inject'], function() {
       utilities.log('*** nodemon started');
       // utilities.startBrowserSync();
     });
-
 });

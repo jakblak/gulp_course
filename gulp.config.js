@@ -20,7 +20,7 @@ module.exports = function() {
     js: [
       clientApp + '**/*.module.js',            // Load these
       clientApp + '**/*.js',
-      '!' + clientApp + '**/*.spec.js',         // Exclude these
+      '!' + clientApp + '**/*.spec.js'          // Exclude these
     ],
     less: client + 'styles/styles.less',
     server: server,
