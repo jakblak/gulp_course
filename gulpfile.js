@@ -4,6 +4,8 @@ var utilities = require('./utils');
 var $ = require('gulp-load-plugins')({lazy: true});
 var port = process.env.PORT || config.defaultPort;
 
+gulp.task('help', $.taskListing);
+
 gulp.task('vet', function() {
   utilities.log('Checking for JS syntax issues');
   return gulp
