@@ -11,10 +11,11 @@ module.exports = function() {
       './src/**/*.js',
       './*.js'
     ],
-    build: './build/',
+    build: './build/',      //.prod    //  .dist
     client: client,
     css: temp + 'styles.css',
     fonts: './bower_components/font-awesome/fonts/**/*.*',
+    htmltemplates: clientApp + '**/*.html',
     images: client + 'images/**/*.*',
     index: client + 'index.html',
     js: [
@@ -25,6 +26,16 @@ module.exports = function() {
     less: client + 'styles/styles.less',
     server: server,
     temp:'./tmp/',
+
+    // Template cache
+    templateCache: {
+      file: 'templates.js',
+      options: {
+        module: 'app.core',
+        standAlone: false,
+        root: 'app/'
+      }
+    },
 
     // Bower and NPM locations
     bower: {

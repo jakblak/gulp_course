@@ -63,6 +63,26 @@ gulp.task('clean-styles', function() {
   utilities.clean(config.temp + '**/*.css');
 });
 
+gulp.task('clean-code', function() {
+  var files = [].concat(
+    config.temp + '**/*.js',
+    config.build + '**/*.html',
+    config.build + 'js/**/*.js');
+  utilities.clean(files);
+});
+
+gulp.task('templatecache', ['clean-code'], function() {
+    utilities.log('Creating AngularJS $templatecache');
+    return gulp
+      .src(config.htmltemplates)
+      .pipe($.minifyHtml({empty: true}))
+      .pipe($.angularTemplatecache(
+          config.templateCache.file,
+          config.templateCache.options
+          ))
+      .pipe(gulp.dest(config.temp));
+  })
+
 gulp.task('wiredep', function() {
   utilities.log('Add bower css, jss and app js files into index.html');
   var options = config.getWiredepDefaultOptions();
